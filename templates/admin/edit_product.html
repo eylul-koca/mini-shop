@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Ürün Düzenle – Admin{% endblock %}
+
+{% block content %}
+<div class="form-card">
+  <h2>✏️ Ürünü Düzenle</h2>
+
+  <form method="POST">
+    <div class="form-group">
+      <label>Ürün Adı *</label>
+      <input type="text" name="name" value="{{ product.name }}" required />
+    </div>
+
+    <div class="form-group">
+      <label>Açıklama</label>
+      <textarea name="description">{{ product.description }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Fiyat (₺) *</label>
+      <input type="number" name="price" step="0.01" min="0" value="{{ product.price }}" required />
+    </div>
+
+    <div class="form-group">
+      <label>Stok Adedi *</label>
+      <input type="number" name="stock" min="0" value="{{ product.stock }}" required />
+    </div>
+
+    <div class="form-group">
+      <label>Görsel URL</label>
+      <input type="url" name="image_url" value="{{ product.image_url }}" placeholder="https://örnek.com/resim.jpg" />
+    </div>
+
+    {% if product.image_url %}
+      <div style="margin-bottom: 1rem;">
+        <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 0.4rem;">Mevcut Görsel:</p>
+        <img src="{{ product.image_url }}" style="width: 120px; border-radius: 10px;" />
+      </div>
+    {% endif %}
+
+    <div style="display: flex; gap: 0.8rem; margin-top: 1.5rem;">
+      <button type="submit" class="btn btn-primary" style="flex:1">💾 Kaydet</button>
+      <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline">İptal</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Kayıt Ol – Mini Shop{% endblock %}
+
+{% block content %}
+<div class="auth-box">
+  <h2>🎉 Hesap Oluştur</h2>
+  <p class="subtitle">Mini Shop'a katıl!</p>
+
+  <form method="POST">
+    <div class="form-group">
+      <label>Kullanıcı Adı</label>
+      <input type="text" name="username" placeholder="kullanici_adi" required autofocus />
+    </div>
+    <div class="form-group">
+      <label>Şifre</label>
+      <input type="password" name="password" placeholder="••••••••" required />
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">
+      🚀 Kayıt Ol
+    </button>
+  </form>
+
+  <div class="auth-footer">
+    Zaten hesabın var mı? <a href="{{ url_for('login') }}">Giriş Yap</a>
+  </div>
+</div>
+{% endblock %}

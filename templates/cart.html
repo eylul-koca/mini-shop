@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Sepetim – Mini Shop{% endblock %}
+
+{% block content %}
+<h1 class="page-title">🛒 Sepetim</h1>
+
+{% if items %}
+  <div class="cart-wrapper">
+    <!-- Sol: Ürünler -->
+    <div class="cart-items">
+      {% for item in items %}
+        <div class="cart-item">
+          <!-- Ürün Görseli -->
+          {% if item.product.image_url %}
+            <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}" />
+          {% else %}
+            <img src="https://placehold.co/75x75/ede9fe/7c3aed?text=📦" alt="{{ item.product.name }}" />
+          {% endif %}
+
+          <!-- Ürün Bilgisi -->
+          <div class="item-info">
+            <h4>{{ item.product.name }}</h4>
+            <div class="item-price">{{ "%.2f"|format(item.product.price) }} ₺ / adet</div>
+          </div>
+
+          <!-- Miktar Güncelle -->
+          <div class="qty-control">
+            <label>Adet</label>
+            <form action="{{ url_for('update_cart', item_id=item.id) }}" method="POST">
+              <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.stock }}"
+                     onchange="this.form.submit()" />
+            </form>
+          </div>
+
+          <!-- Ara Toplam -->
+          <div class="subtotal">
+            {{ "%.2f"|format(item.product.price * item.quantity) }} ₺
+          </div>
+
+          <!-- Sil -->
+          <a href="{{ url_for('remove_from_cart', item_id=item.id) }}" class="remove-btn"
+             onclick="return confirm('Bu ürünü sepetten çıkarmak istediğinden emin misin?')">
+            🗑️
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Sağ: Sipariş Özeti -->
+    <div class="order-summary">
+      <h3>📋 Sipariş Özeti</h3>
+      {% for item in items %}
+        <div class="summary-row">
+          <span>{{ item.product.name }} x{{ item.quantity }}</span>
+          <span>{{ "%.2f"|format(item.product.price * item.quantity) }} ₺</span>
+        </div>
+      {% endfor %}
+      <div class="summary-total">
+        <span>Toplam</span>
+        <span>{{ "%.2f"|format(total) }} ₺</span>
+      </div>
+      <button class="btn btn-primary btn-block"
+              onclick="alert('Ödeme sistemi yakında! 🚀')">
+        💳 Siparişi Tamamla
+      </button>
+      <div style="margin-top: 0.8rem;">
+        <a href="{{ url_for('index') }}" class="btn btn-outline btn-sm btn-block">
+          ← Alışverişe Devam Et
+        </a>
+      </div>
+    </div>
+  </div>
+
+{% else %}
+  <div class="empty-cart">
+    <div class="empty-icon">🛒</div>
+    <h3>Sepetiniz boş</h3>
+    <p>Henüz sepete ürün eklemediniz.</p>
+    <a href="{{ url_for('index') }}" class="btn btn-primary">
+      🛍️ Alışverişe Başla
+    </a>
+  </div>
+{% endif %}
+{% endblock %}

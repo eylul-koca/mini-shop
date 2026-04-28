@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Ürün Ekle – Admin{% endblock %}
+
+{% block content %}
+<div class="form-card">
+  <h2>➕ Yeni Ürün Ekle</h2>
+
+  <form method="POST">
+    <div class="form-group">
+      <label>Ürün Adı *</label>
+      <input type="text" name="name" placeholder="örn: iPhone 15 Pro" required />
+    </div>
+
+    <div class="form-group">
+      <label>Açıklama</label>
+      <textarea name="description" placeholder="Ürün hakkında kısa bir açıklama..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Fiyat (₺) *</label>
+      <input type="number" name="price" step="0.01" min="0" placeholder="0.00" required />
+    </div>
+
+    <div class="form-group">
+      <label>Stok Adedi *</label>
+      <input type="number" name="stock" min="0" placeholder="0" required />
+    </div>
+
+    <div class="form-group">
+      <label>Görsel URL (isteğe bağlı)</label>
+      <input type="url" name="image_url" placeholder="https://örnek.com/resim.jpg" />
+    </div>
+
+    <div style="display: flex; gap: 0.8rem; margin-top: 1.5rem;">
+      <button type="submit" class="btn btn-primary" style="flex:1">✅ Ürünü Ekle</button>
+      <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline">İptal</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
