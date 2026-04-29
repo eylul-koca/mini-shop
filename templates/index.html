@@ -2,59 +2,56 @@
 {% block title %}Ana Sayfa – Mini Shop{% endblock %}
 
 {% block content %}
+
+<!-- HERO SECTION -->
+<div class="hero">
+  <div class="hero-text">
+    <h1>En İyi Ürünler<br/>Burada! 🛍️</h1>
+    <p>Binlerce ürün arasından dilediğini seç, hızlıca sepetine ekle.</p>
+    <a href="#urunler" class="btn" style="background:white; color: #7c3aed; font-weight:800;">
+      🔥 Alışverişe Başla
+    </a>
+  </div>
+  <div class="hero-emoji">🛒</div>
+</div>
+
+<div id="urunler"></div>
 <h1 class="page-title">🛍️ Ürünler</h1>
-<!-- ARAMA KUTUSU -->
+
 <div style="margin-bottom: 1.5rem;">
-  <input 
-    type="text" 
+  <input
+    type="text"
     id="searchInput"
     placeholder="🔍 Ürün ara..."
     onkeyup="searchProducts()"
-    style="
-      width: 100%;
-      max-width: 400px;
-      padding: 0.75rem 1.2rem;
-      border: 2px solid #e5e7eb;
-      border-radius: 30px;
-      font-size: 0.95rem;
-      font-family: 'Nunito', sans-serif;
-      outline: none;
-      transition: border 0.2s;
-    "
+    style="width:100%; max-width:400px; padding:0.75rem 1.2rem; border:2px solid #e5e7eb; border-radius:30px; font-size:0.95rem; font-family:'Nunito',sans-serif; outline:none; transition:border 0.2s; background:white;"
     onfocus="this.style.borderColor='#7c3aed'"
     onblur="this.style.borderColor='#e5e7eb'"
   />
 </div>
-<span class="badge-new">✨ Yeni</span>
+
 {% if products %}
   <div class="products-grid">
     {% for product in products %}
       <div class="product-card">
+        <span class="badge-new">✨ Yeni</span>
         {% if product.image_url %}
           <img src="{{ product.image_url }}" alt="{{ product.name }}" />
         {% else %}
           <img src="https://placehold.co/400x200/ede9fe/7c3aed?text={{ product.name }}" alt="{{ product.name }}" />
         {% endif %}
-
         <div class="card-body">
           <h3>{{ product.name }}</h3>
           <div class="price">{{ "%.2f"|format(product.price) }} ₺</div>
           <div class="stock">
-            {% if product.stock > 0 %}
-              ✅ Stokta {{ product.stock }} adet
-            {% else %}
-              ❌ Stok yok
-            {% endif %}
+            {% if product.stock > 0 %}✅ Stokta {{ product.stock }} adet
+            {% else %}❌ Stok yok{% endif %}
           </div>
           <div class="card-actions">
-            <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-outline btn-sm">
-              👁️ İncele
-            </a>
+            <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-outline btn-sm">👁️ İncele</a>
             {% if session.get('user_id') and product.stock > 0 %}
               <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST" style="flex:1">
-                <button type="submit" class="btn btn-primary btn-sm btn-block">
-                  🛒 Sepete Ekle
-                </button>
+                <button type="submit" class="btn btn-primary btn-sm btn-block">🛒 Sepete Ekle</button>
               </form>
             {% endif %}
           </div>
@@ -62,12 +59,12 @@
       </div>
     {% endfor %}
   </div>
-
 {% else %}
-  <div style="text-align:center; padding: 4rem 2rem; background: white; border-radius: 16px; box-shadow: var(--shadow);">
-    <div style="font-size: 4rem; margin-bottom: 1rem;">📦</div>
-    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Henüz ürün eklenmemiş</h3>
-    <p style="color: var(--muted);">Admin panelinden ürün ekleyebilirsin.</p>
+  <div style="text-align:center; padding:4rem 2rem; background:white; border-radius:16px;">
+    <div style="font-size:4rem; margin-bottom:1rem;">📦</div>
+    <h3>Henüz ürün eklenmemiş</h3>
+    <p style="color:#6b7280;">Admin panelinden ürün ekleyebilirsin.</p>
   </div>
 {% endif %}
+
 {% endblock %}

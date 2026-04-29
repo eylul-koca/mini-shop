@@ -8,11 +8,8 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
-  <a href="{{ url_for('index') }}" class="logo">
-    🛒 Mini Shop
-  </a>
+  <a href="{{ url_for('index') }}" class="logo">🛒 Mini Shop</a>
   <ul class="nav-links">
     <li><a href="{{ url_for('index') }}">🏠 Ana Sayfa</a></li>
     {% if session.get('user_id') %}
@@ -31,22 +28,20 @@
   </ul>
 </nav>
 
-<!-- İÇERİK -->
 <div class="container">
-  <!-- Flash Mesajları -->
   <div class="alerts">
     {% for category, message in get_flashed_messages(with_categories=true) %}
       <div class="alert alert-{{ category }}">{{ message }}</div>
     {% endfor %}
   </div>
-
   {% block content %}{% endblock %}
 </div>
 
-<!-- FOOTER -->
 <footer>
   <p>© 2026 Mini Shop — Eylül tarafından yapıldı 💜</p>
 </footer>
+
+<button class="dark-toggle" onclick="toggleDark()" title="Dark Mode">🌙</button>
 
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
